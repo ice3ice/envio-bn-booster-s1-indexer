@@ -1,0 +1,15 @@
+type Claim {
+  id: ID!
+  claimId: [BigInt!]!
+  projectId: [BigInt!]!
+  token: [String!]!
+  totalAmount: [BigInt!]!
+  recipient: String!
+  expireTime: BigInt!
+  blockTimestamp: BigInt!
+}
+
+type Specific {
+  id: ID!
+  claimId2: String!
+}
