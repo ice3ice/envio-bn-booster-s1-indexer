@@ -11,5 +11,5 @@ type Claim {
 
 type Specific {
   id: ID!
-  claimId2: String!
+  claimId: String!
 }
