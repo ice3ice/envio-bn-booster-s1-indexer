@@ -9,7 +9,21 @@ type Claim {
   blockTimestamp: BigInt!
 }
 
+type Stats {
+  id: ID!
+  claimCount: BigInt!
+  projectCount: BigInt!
+  tokenCount: BigInt!
+  totalAmountCount: BigInt!
+  blockTimestamp: BigInt!
+}
+
 type Specific {
   id: ID!
-  claimId: String!
+  claimId: [BigInt!]!
+  projectId: [BigInt!]!
+  token: [String!]!
+  totalAmount: [BigInt!]!
+  recipient: String!
+  blockTimestamp: BigInt!
 }

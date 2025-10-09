@@ -42,12 +42,30 @@ RewardVault.RewardsClaimedV2.handler(async ({ event, context }) => {
   context.Claim.set(claimEntity);
 
   if (claimIds.length > 1 || projectIds.length > 1 || tokens.length > 1 || totalAmounts.length > 1) {
-    const specificEntity = {
+    const statsEntity = {
       id,
-      claimId: id,
+      claimCount: claimIds.length,
+      projectCount: projectIds.length,
+      tokenCount: tokens.length,
+      totalAmountCount: totalAmounts.length,
+      blockTimestamp: event.block.timestamp,
     };
 
-    context.Specific.set(specificEntity);
+    context.Stats.set(statsEntity);
+
+    if (tokens.length !== totalAmounts.length || tokens.length != projectIds.length || totalAmounts.length != projectIds.length) {
+      const specificEntity = {
+        id,
+        claimId: claimIds,
+        projectId: projectIds,
+        token: tokens,
+        totalAmount: totalAmounts,
+        recipient,
+        blockTimestamp: event.block.timestamp,
+      };
+
+      context.Specific.set(specificEntity);
+    }
   }
 });
 
