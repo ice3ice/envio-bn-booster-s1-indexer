@@ -1,71 +1,63 @@
 const { RewardVault } = require("../generated");
 
+const { uidHash } = require("./utils");
+
 RewardVault.RewardsClaimed.handler(async ({ event, context }) => {
-  const { claimId, projectId, token, amount, recipient, expireTime } = event.params;
+  const { projectId, token, amount, recipient } = event.params;
 
-  const id = event.transaction.hash.toString().toLowerCase();
+  console.log(`RewardsClaimed for ${recipient} at blockTimestamp ${event.block.timestamp}`);
 
-  console.log(`RewardsClaimed for ${id} at blockTimestamp ${event.block.timestamp}`);
+  const id = uidHash(recipient, token);
 
-  const claimEntity = {
-    id: id,
-    claimId: [claimId],
-    projectId: [projectId],
-    token: [token],
-    totalAmount: [amount],
-    recipient,
-    expireTime,
-    blockTimestamp: event.block.timestamp,
-  };
+  let userClaimEntity = await context.UserClaim.get(id);
+  if (!userClaimEntity) {
+    userClaimEntity = {
+      id: id,
+      recipient: recipient,
+      token: token,
+      projectId: projectId,
+      amount: amount,
+      claimCount: 1,
+      blockTimestamp: event.block.timestamp,
+    };
+  } else {
+    userClaimEntity.amount = userClaimEntity.amount + amount;
+    userClaimEntity.claimCount = userClaimEntity.claimCount + 1;
+    userClaimEntity.blockTimestamp = event.block.timestamp;
+  }
 
-  context.Claim.set(claimEntity);
+  context.UserClaim.set(userClaimEntity);
 });
 
 RewardVault.RewardsClaimedV2.handler(async ({ event, context }) => {
-  const { claimId: claimIds, projectId: projectIds, token: tokens, totalAmount: totalAmounts, recipient, expireTime } = event.params;
+  const { projectId: projectIds, token: tokens, totalAmount: totalAmounts, recipient } = event.params;
 
-  const id = event.transaction.hash.toString().toLowerCase();
+  console.log(`RewardsClaimed for ${recipient} at blockTimestamp ${event.block.timestamp}`);
 
-  console.log(`RewardsClaimedV2 for ${id} at blockTimestamp ${event.block.timestamp}`);
+  for (let i = 0; i < tokens.length; i++) {
+    const token = tokens[i];
+    const totalAmount = totalAmounts[i];
+    const projectId = projectIds[i];
 
-  const claimEntity = {
-    id,
-    claimId: claimIds,
-    projectId: projectIds,
-    token: tokens,
-    totalAmount: totalAmounts,
-    recipient,
-    expireTime,
-    blockTimestamp: event.block.timestamp,
-  };
+    const id = uidHash(recipient, token);
 
-  context.Claim.set(claimEntity);
-
-  if (claimIds.length > 1 || projectIds.length > 1 || tokens.length > 1 || totalAmounts.length > 1) {
-    const statsEntity = {
-      id,
-      claimCount: claimIds.length,
-      projectCount: projectIds.length,
-      tokenCount: tokens.length,
-      totalAmountCount: totalAmounts.length,
-      blockTimestamp: event.block.timestamp,
-    };
-
-    context.Stats.set(statsEntity);
-
-    if (tokens.length !== totalAmounts.length || tokens.length != projectIds.length || totalAmounts.length != projectIds.length) {
-      const specificEntity = {
-        id,
-        claimId: claimIds,
-        projectId: projectIds,
-        token: tokens,
-        totalAmount: totalAmounts,
-        recipient,
+    let userClaimEntity = await context.UserClaim.get(id);
+    if (!userClaimEntity) {
+      userClaimEntity = {
+        id: id,
+        recipient: recipient,
+        token: token,
+        projectId: projectId,
+        amount: totalAmount,
+        claimCount: 1,
         blockTimestamp: event.block.timestamp,
       };
-
-      context.Specific.set(specificEntity);
+    } else {
+      userClaimEntity.amount = userClaimEntity.amount + totalAmount;
+      userClaimEntity.claimCount = userClaimEntity.claimCount + 1;
+      userClaimEntity.blockTimestamp = event.block.timestamp;
     }
+
+    context.UserClaim.set(userClaimEntity);
   }
 });
-
