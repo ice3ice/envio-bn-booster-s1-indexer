@@ -17,12 +17,12 @@ RewardVault.RewardsClaimed.handler(async ({ event, context }) => {
       token: token,
       projectId: projectId,
       amount: amount,
-      claimCount: 1,
+      claimCount: 1n,
       blockTimestamp: event.block.timestamp,
     };
   } else {
     userClaimEntity.amount = userClaimEntity.amount + amount;
-    userClaimEntity.claimCount = userClaimEntity.claimCount + BigInt(1);
+    userClaimEntity.claimCount = userClaimEntity.claimCount + 1n;
     userClaimEntity.blockTimestamp = event.block.timestamp;
   }
 
@@ -49,12 +49,12 @@ RewardVault.RewardsClaimedV2.handler(async ({ event, context }) => {
         token: token,
         projectId: projectId,
         amount: totalAmount,
-        claimCount: 1,
+        claimCount: 1n,
         blockTimestamp: event.block.timestamp,
       };
     } else {
       userClaimEntity.amount = userClaimEntity.amount + totalAmount;
-      userClaimEntity.claimCount = userClaimEntity.claimCount + BigInt(1);
+      userClaimEntity.claimCount = userClaimEntity.claimCount + 1n;
       userClaimEntity.blockTimestamp = event.block.timestamp;
     }
 
