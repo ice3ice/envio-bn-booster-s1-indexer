@@ -22,7 +22,7 @@ RewardVault.RewardsClaimed.handler(async ({ event, context }) => {
     };
   } else {
     userClaimEntity.amount = userClaimEntity.amount + amount;
-    userClaimEntity.claimCount = userClaimEntity.claimCount + 1;
+    userClaimEntity.claimCount = userClaimEntity.claimCount + BigInt(1);
     userClaimEntity.blockTimestamp = event.block.timestamp;
   }
 
@@ -54,7 +54,7 @@ RewardVault.RewardsClaimedV2.handler(async ({ event, context }) => {
       };
     } else {
       userClaimEntity.amount = userClaimEntity.amount + totalAmount;
-      userClaimEntity.claimCount = userClaimEntity.claimCount + 1;
+      userClaimEntity.claimCount = userClaimEntity.claimCount + BigInt(1);
       userClaimEntity.blockTimestamp = event.block.timestamp;
     }
 
