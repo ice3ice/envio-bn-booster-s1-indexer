@@ -5,7 +5,7 @@ const { uidHash } = require("./utils");
 RewardVault.RewardsClaimed.handler(async ({ event, context }) => {
   const { projectId, token, amount, recipient } = event.params;
 
-  console.log(`RewardsClaimed for ${recipient} at blockTimestamp ${event.block.timestamp}`);
+  // console.log(`RewardsClaimed for ${recipient} at blockTimestamp ${event.block.timestamp}`);
 
   const id = uidHash(recipient, token);
 
@@ -32,7 +32,7 @@ RewardVault.RewardsClaimed.handler(async ({ event, context }) => {
 RewardVault.RewardsClaimedV2.handler(async ({ event, context }) => {
   const { projectId: projectIds, token: tokens, totalAmount: totalAmounts, recipient } = event.params;
 
-  console.log(`RewardsClaimed for ${recipient} at blockTimestamp ${event.block.timestamp}`);
+  // console.log(`RewardsClaimed for ${recipient} at blockTimestamp ${event.block.timestamp}`);
 
   for (let i = 0; i < tokens.length; i++) {
     const token = tokens[i];
