@@ -26,7 +26,24 @@ RewardVault.RewardsClaimed.handler(async ({ event, context }) => {
     userClaimEntity.blockTimestamp = event.block.timestamp;
   }
 
+  let userClaimStatsEntity = await context.UserClaimStats.get(recipient);
+  if (!userClaimStatsEntity) {
+    userClaimStatsEntity = {
+      id: recipient,
+      tokens: [token],
+      claimCount: 1n,
+      blockTimestamp: event.block.timestamp,
+    };
+  } else if (!userClaimStatsEntity.tokens.includes(token)) {
+    userClaimStatsEntity.tokens.push(token);
+    userClaimStatsEntity.claimCount = userClaimStatsEntity.claimCount + 1n;
+    userClaimStatsEntity.blockTimestamp = event.block.timestamp;
+  } else {
+    userClaimStatsEntity.blockTimestamp = event.block.timestamp;
+  }
+
   context.UserClaim.set(userClaimEntity);
+  context.UserClaimStats.set(userClaimStatsEntity);
 });
 
 RewardVault.RewardsClaimedV2.handler(async ({ event, context }) => {
@@ -58,6 +75,23 @@ RewardVault.RewardsClaimedV2.handler(async ({ event, context }) => {
       userClaimEntity.blockTimestamp = event.block.timestamp;
     }
 
+    let userClaimStatsEntity = await context.UserClaimStats.get(recipient);
+    if (!userClaimStatsEntity) {
+      userClaimStatsEntity = {
+        id: recipient,
+        tokens: [token],
+        claimCount: 1n,
+        blockTimestamp: event.block.timestamp,
+      };
+    } else if (!userClaimStatsEntity.tokens.includes(token)) {
+      userClaimStatsEntity.tokens.push(token);
+      userClaimStatsEntity.claimCount = userClaimStatsEntity.claimCount + 1n;
+      userClaimStatsEntity.blockTimestamp = event.block.timestamp;
+    } else {
+      userClaimStatsEntity.blockTimestamp = event.block.timestamp;
+    }
+
     context.UserClaim.set(userClaimEntity);
+    context.UserClaimStats.set(userClaimStatsEntity);
   }
 });

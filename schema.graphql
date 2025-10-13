@@ -7,3 +7,10 @@ type UserClaim {
   claimCount: BigInt!
   blockTimestamp: BigInt!
 }
+
+type UserClaimStats {
+   id: String! # address
+   tokens: [String!]!
+   claimCount: BigInt!
+   blockTimestamp: BigInt!
+}

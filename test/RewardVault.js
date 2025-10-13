@@ -27,16 +27,25 @@ describe("RewardVault contract event tests", () => {
 
     const id = uidHash(params.recipient, params.token);
 
-    const rewardVaultEntity = await mockDb.entities.UserClaim.get(id);
+    const userClaimEntity = await mockDb.entities.UserClaim.get(id);
+    const userClaimStatsEntity = await mockDb.entities.UserClaimStats.get(params.recipient);
 
-    // console.log(rewardVaultEntity);
+    // console.log(userClaimEntity);
+    // console.log(userClaimStatsEntity);
 
-    assert.deepEqual(rewardVaultEntity, {
+    assert.deepEqual(userClaimEntity, {
       id: id,
       recipient: params.recipient,
       token: params.token,
       projectId: params.projectId,
       amount: params.amount,
+      claimCount: 1,
+      blockTimestamp: eventMock.block.timestamp
+    });
+
+    assert.deepEqual(userClaimStatsEntity, {
+      id: params.recipient,
+      tokens: [params.token],
       claimCount: 1,
       blockTimestamp: eventMock.block.timestamp
     });
@@ -54,8 +63,8 @@ describe("RewardVault contract event tests", () => {
     }
 
     let id = uidHash(params.recipient, params.token[0]);
-    let rewardVaultEntity = await mockDb.entities.UserClaim.get(id);
-    const originalAmount = rewardVaultEntity ? rewardVaultEntity.amount : 0;
+    let userClaimEntity = await mockDb.entities.UserClaim.get(id);
+    const originalAmount = userClaimEntity ? userClaimEntity.amount : 0;
 
     const eventMock = RewardVault.RewardsClaimedV2.createMockEvent(params);
 
@@ -65,11 +74,11 @@ describe("RewardVault contract event tests", () => {
     });
 
     id = uidHash(params.recipient, params.token[0]);
-    rewardVaultEntity = await mockDb.entities.UserClaim.get(id);
+    userClaimEntity = await mockDb.entities.UserClaim.get(id);
 
-    // console.log(rewardVaultEntity);
+    // console.log(userClaimEntity);
 
-    assert.deepEqual(rewardVaultEntity, {
+    assert.deepEqual(userClaimEntity, {
       id: id,
       recipient: params.recipient,
       token: params.token[0],
@@ -80,17 +89,26 @@ describe("RewardVault contract event tests", () => {
     });
 
     id = uidHash(params.recipient, params.token[1]);
-    rewardVaultEntity = await mockDb.entities.UserClaim.get(id);
+    userClaimEntity = await mockDb.entities.UserClaim.get(id);
 
-    // console.log(rewardVaultEntity);
+    // console.log(userClaimEntity);
 
-    assert.deepEqual(rewardVaultEntity, {
+    assert.deepEqual(userClaimEntity, {
       id: id,
       recipient: params.recipient,
       token: params.token[1],
       projectId: params.projectId[1],
       amount: params.totalAmount[1],
       claimCount: 1,
+      blockTimestamp: eventMock.block.timestamp
+    });
+
+    const userClaimStatsEntity = await mockDb.entities.UserClaimStats.get(params.recipient);
+
+    assert.deepEqual(userClaimStatsEntity, {
+      id: params.recipient,
+      tokens: [params.token[0], params.token[1]],
+      claimCount: 2,
       blockTimestamp: eventMock.block.timestamp
     });
   });
