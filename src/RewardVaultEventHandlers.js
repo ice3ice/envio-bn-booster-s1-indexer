@@ -5,7 +5,7 @@ const { uidHash } = require("./utils");
 RewardVault.RewardsClaimed.handler(async ({ event, context }) => {
   const { projectId, token, amount, recipient } = event.params;
 
-  // console.log(`RewardsClaimed for ${recipient} at blockTimestamp ${event.block.timestamp}`);
+  console.log(`RewardsClaimed for ${recipient} at blockTimestamp ${event.block.timestamp}`);
 
   const id = uidHash(recipient, token);
 
