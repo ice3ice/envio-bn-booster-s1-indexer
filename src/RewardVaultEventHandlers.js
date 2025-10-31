@@ -8,13 +8,13 @@ RewardVault.RewardsClaimed.handler(async ({ event, context }) => {
 
   // console.log(`RewardsClaimed for ${recipient} at blockTimestamp ${event.block.timestamp}`);
 
-  // if (!eligibleToken(token)) {
-  //   return;
-  // }
-
-  if (!eligibleProject(projectId)) {
+  if (!eligibleToken(token)) {
     return;
   }
+
+  // if (!eligibleProject(projectId)) {
+  //   return;
+  // }
 
   const id = uidHash(recipient, token);
 
@@ -74,13 +74,13 @@ RewardVault.RewardsClaimedV2.handler(async ({ event, context }) => {
     const totalAmount = totalAmounts[i];
     const projectId = projectIds[i];
 
-    // if (!eligibleToken(token)) {
-    //   continue;
-    // }
-
-    if (!eligibleProject(projectId)) {
+    if (!eligibleToken(token)) {
       continue;
     }
+
+    // if (!eligibleProject(projectId)) {
+    //   continue;
+    // }
 
     const id = uidHash(recipient, token);
 
