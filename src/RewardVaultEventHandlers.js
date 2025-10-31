@@ -1,6 +1,6 @@
 const { RewardVault } = require("../generated");
 
-const { eligibleToken, uidHash } = require("./utils");
+const { eligibleToken, eligibleProject, uidHash } = require("./utils");
 
 
 RewardVault.RewardsClaimed.handler(async ({ event, context }) => {
@@ -8,7 +8,11 @@ RewardVault.RewardsClaimed.handler(async ({ event, context }) => {
 
   // console.log(`RewardsClaimed for ${recipient} at blockTimestamp ${event.block.timestamp}`);
 
-  if (!eligibleToken(token)) {
+  // if (!eligibleToken(token)) {
+  //   return;
+  // }
+
+  if (!eligibleProject(projectId)) {
     return;
   }
 
@@ -49,6 +53,15 @@ RewardVault.RewardsClaimed.handler(async ({ event, context }) => {
 
   context.UserClaim.set(userClaimEntity);
   context.UserClaimStats.set(userClaimStatsEntity);
+
+  // insert into TokenToProjectId
+  const tpid = uidHash(token, projectId.toString());
+  console.log(`Inserting into TokenToProjectId: ${tpid} for token ${token} and projectId ${projectId}`);
+  let tokenToProjectIdEntity = await context.TokenToProjectId.get(tpid);
+  if (!tokenToProjectIdEntity) {
+    tokenToProjectIdEntity = { id: tpid, token: token, projectId: projectId };
+  }
+  context.TokenToProjectId.set(tokenToProjectIdEntity);
 });
 
 RewardVault.RewardsClaimedV2.handler(async ({ event, context }) => {
@@ -61,7 +74,11 @@ RewardVault.RewardsClaimedV2.handler(async ({ event, context }) => {
     const totalAmount = totalAmounts[i];
     const projectId = projectIds[i];
 
-    if (!eligibleToken(token)) {
+    // if (!eligibleToken(token)) {
+    //   continue;
+    // }
+
+    if (!eligibleProject(projectId)) {
       continue;
     }
 
@@ -102,5 +119,14 @@ RewardVault.RewardsClaimedV2.handler(async ({ event, context }) => {
 
     context.UserClaim.set(userClaimEntity);
     context.UserClaimStats.set(userClaimStatsEntity);
+
+    // insert into TokenToProjectId
+    const tpid = uidHash(token, projectId.toString());
+    console.log(`Inserting into TokenToProjectId: ${tpid} for token ${token} and projectId ${projectId}`);
+    let tokenToProjectIdEntity = await context.TokenToProjectId.get(tpid);
+    if (!tokenToProjectIdEntity) {
+      tokenToProjectIdEntity = { id: tpid, token: token, projectId: projectId };
+    }
+    context.TokenToProjectId.set(tokenToProjectIdEntity);
   }
 });

@@ -14,3 +14,9 @@ type UserClaimStats {
    claimCount: BigInt!
    blockTimestamp: BigInt!
 }
+
+type TokenToProjectId {
+  id: String!
+  token: String!
+  projectId: BigInt!
+}
