@@ -12,7 +12,7 @@ describe("RewardVault contract event tests", () => {
     const params = {
       claimId: 1,
       projectId: 1,
-      token: "0x235B6fe22B4642aDa16D311855c49Ce7DE260841",
+      token: "0x5ffd0eadc186af9512542d0d5e5eafc65d5afc5b",
       amount: 10000,
       recipient: "0x73822216A80E4FF2dCB1477287c17e1c523F165a",
       expireTime: 1760019608,
@@ -56,7 +56,7 @@ describe("RewardVault contract event tests", () => {
     const params = {
       claimId: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
       projectId: [1, 2],
-      token: ["0x235B6fe22B4642aDa16D311855c49Ce7DE260841", "0x235B6fe22B4642aDa16D311855c49Ce7DE260842"],
+      token: ["0x5ffd0eadc186af9512542d0d5e5eafc65d5afc5b", "0xa227cc36938f0c9e09ce0e64dfab226cad739447"],
       totalAmount: [10000, 20000],
       recipient: "0x73822216A80E4FF2dCB1477287c17e1c523F165a",
       expireTime: 1760019608,
