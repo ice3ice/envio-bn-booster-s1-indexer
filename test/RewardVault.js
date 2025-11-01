@@ -11,7 +11,7 @@ describe("RewardVault contract event tests", () => {
   it("RewardVault RewardsClaimed", async () => {
     const params = {
       claimId: 1,
-      projectId: 1,
+      projectId: 1127,
       token: "0x5ffd0eadc186af9512542d0d5e5eafc65d5afc5b",
       amount: 10000,
       recipient: "0x73822216A80E4FF2dCB1477287c17e1c523F165a",
@@ -55,7 +55,7 @@ describe("RewardVault contract event tests", () => {
   it("RewardVault RewardsClaimedV2", async () => {
     const params = {
       claimId: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-      projectId: [1, 2],
+      projectId: [1127, 1128],
       token: ["0x5ffd0eadc186af9512542d0d5e5eafc65d5afc5b", "0xa227cc36938f0c9e09ce0e64dfab226cad739447"],
       totalAmount: [10000, 20000],
       recipient: "0x73822216A80E4FF2dCB1477287c17e1c523F165a",

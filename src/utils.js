@@ -16,10 +16,10 @@ const eligibleToken = token => {
 
 const eligibleProject = projectId => {
   const eligibleProjects = new Map();
-  eligibleProjects.set(178, true);
-  eligibleProjects.set(182, true);
-  eligibleProjects.set(179, true);
-  eligibleProjects.set(185, true);
+  eligibleProjects.set(1127, true);
+  eligibleProjects.set(1128, true);
+  eligibleProjects.set(1131, true);
+  eligibleProjects.set(1134, true);
 
   return eligibleProjects.has(projectId);
 }
