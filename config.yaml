@@ -13,7 +13,7 @@ contracts:
 rollback_on_reorg: false
 networks:
   - id: 56 # BSC
-    start_block: 42177208
+    start_block: 57692535
     contracts:
       - name: RewardVault
         address: "0x317Cd61fa24e2E4068b4C47Bd58D5fC9f4E7A12b"

@@ -24,10 +24,6 @@ const eligibleProject = projectId => {
   return eligibleProjects.has(projectId);
 }
 
-const test = () => {
-  return 1;
-}
-
 module.exports = {
   eligibleToken,
   eligibleProject,
