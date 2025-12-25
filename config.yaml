@@ -15,11 +15,11 @@ contracts:
       - event: DelegateLockupIncreased(address indexed user, address indexed node, uint256 lockupPeriod, uint256 amount, uint256 weightedStartTime, uint256 newEffectiveLockup, uint256 effectiveMultiplier)
 rollback_on_reorg: false
 networks:
-  - id: 97 # BSC
-    start_block: 80635312
+  - id: 56 # BSC
+    start_block: 72936256
     contracts:
       - name: NodeStakingVault
-        address: "0x52D5109A3a066aA6bf21792F201fC93EE6F8a525"
+        address: "0x6c77c67fE2c5C830b185736459AD199da6E8E587"
 field_selection:
   transaction_fields:
     - "hash"
