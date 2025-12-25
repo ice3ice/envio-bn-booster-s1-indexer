@@ -1,22 +1,18 @@
-type UserClaim {
-  id: String! # (address + token)
-  recipient: String! # address
-  projectId: BigInt!
-  token: String!
+type UserHistory {
+  id: ID!
+  user: String! # (address)
+  operation: String! # Delegated, DelegateAmountIncreased, DelegateUnstakingInitiated, DelegateUnstaked, DelegateLockupIncreased
   amount: BigInt!
-  claimCount: BigInt!
-  blockTimestamp: BigInt!
+  period: BigInt!
+  blockTimestamp: Int!
+  transactionHash: String!
 }
 
-type UserClaimStats {
-   id: String! # address
-   tokens: [String!]!
-   claimCount: BigInt!
-   blockTimestamp: BigInt!
-}
-
-type TokenToProjectId {
+type UserTaskCompleted {
   id: String!
-  token: String!
-  projectId: BigInt!
+  task1Completed: Boolean!
+  task2Completed: Boolean!
+  task3Completed: Boolean!
+  task4Completed: Boolean!
+  task5Completed: Boolean!
 }

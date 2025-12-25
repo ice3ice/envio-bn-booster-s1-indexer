@@ -1,22 +1,25 @@
-name: zkpass-bn-booster-s1-indexer
-description: zkPass Binance Booster S1 indexer
+name: envio-bn-booster-s2-indexer
+description: Envio Binance Booster S2 indexer
 #Global contract definitions that must contain all definitions except
 #addresses. Now you can share a single handler/abi/event definitions
 #for contracts across multiple chains
 contracts:
-  - name: RewardVault
-    abi_file_path: ./abis/reward-vault-abi.json
-    handler: ./src/RewardVaultEventHandlers.js
+  - name: NodeStakingVault
+    abi_file_path: ./abis/node-staking-vault-abi.json
+    handler: ./src/NodeStakingVaultEventHandlers.js
     events:
-      - event: RewardsClaimed(uint256 indexed claimId, uint256 indexed projectId, address token, uint256 amount, address recipient, uint256 expireTime)
-      - event: RewardsClaimedV2(uint256[] claimId, uint256[] projectId, address[] token, uint256[] totalAmount, address recipient, uint256 expireTime)
+      - event: DelegateAmountIncreased(address indexed user, address indexed node, uint256 amount, uint256 newTotalAmount, uint256 weightedStartTime, uint256 effectiveLockUpPeriod, uint256 effectiveMultiplier)
+      - event: DelegateUnstaked(address indexed user, uint256 amount)
+      - event: DelegateUnstakingInitiated(address indexed user, address indexed node, uint256 amount, uint256 cooldownAmount)
+      - event: Delegated(address indexed user, address indexed node, uint256 amount, uint256 effectiveMultiplier, uint256 effectiveLockUpPeriod)
+      - event: DelegateLockupIncreased(address indexed user, address indexed node, uint256 lockupPeriod, uint256 amount, uint256 weightedStartTime, uint256 newEffectiveLockup, uint256 effectiveMultiplier)
 rollback_on_reorg: false
 networks:
-  - id: 56 # BSC
-    start_block: 57692535
+  - id: 97 # BSC
+    start_block: 80635312
     contracts:
-      - name: RewardVault
-        address: "0x317Cd61fa24e2E4068b4C47Bd58D5fC9f4E7A12b"
+      - name: NodeStakingVault
+        address: "0x52D5109A3a066aA6bf21792F201fC93EE6F8a525"
 field_selection:
   transaction_fields:
     - "hash"
