@@ -4,12 +4,17 @@
 const { NodeStakingVault } = require("../generated");
 const { getTaskCompleted } = require("./utils");
 
+const INCREASED_AMOUNT = 6;
+const DELEGATE_AMOUNT_1 = 2;
+const DELEGATE_AMOUNT_2 = 8;
+const DELEGATE_LOCKUP_PERIOD = 5 * 60;
+
 NodeStakingVault.DelegateAmountIncreased.handler(async ({ event, context }) => {
   // console.log("event.transaction.hash", event.transaction);
 
   const amount = Number(BigInt(event.params.amount) / BigInt(10**18));
 
-  if(amount !== 6) {
+  if(amount !== INCREASED_AMOUNT) {
     return;
   }
 
@@ -41,7 +46,7 @@ NodeStakingVault.DelegateAmountIncreased.handler(async ({ event, context }) => {
     }
   }
 
-  if(newTotalAmount >= 8) {
+  if(newTotalAmount >= DELEGATE_AMOUNT_2) {
     userTaskCompleted.task5Completed = true;
   }
 
@@ -84,7 +89,7 @@ NodeStakingVault.Delegated.handler(async ({ event, context }) => {
   const amount = Number(BigInt(event.params.amount) / BigInt(10**18));
   const effectiveLockUpPeriod = Number(event.params.effectiveLockUpPeriod);
 
-  if ((amount !== 2 && amount !== 8) || effectiveLockUpPeriod !== 10 * 60) {
+  if ((amount !== DELEGATE_AMOUNT_1 && amount !== DELEGATE_AMOUNT_2) || effectiveLockUpPeriod !== DELEGATE_LOCKUP_PERIOD) {
     return;
   }
 
@@ -114,7 +119,7 @@ NodeStakingVault.Delegated.handler(async ({ event, context }) => {
     }
   }
 
-  if(amount >= 8) {
+  if(amount >= DELEGATE_AMOUNT_2) {
     userTaskCompleted.task5Completed = true;
   }
 
@@ -126,7 +131,7 @@ NodeStakingVault.Delegated.handler(async ({ event, context }) => {
 NodeStakingVault.DelegateLockupIncreased.handler(async ({ event, context }) => {
   const effectiveLockUpPeriod = Number(event.params.lockupPeriod);
 
-  if(effectiveLockUpPeriod !== 10 * 60) {
+  if(effectiveLockUpPeriod !== DELEGATE_LOCKUP_PERIOD) {
     return;
   }
 
@@ -158,7 +163,7 @@ NodeStakingVault.DelegateLockupIncreased.handler(async ({ event, context }) => {
     }
   }
 
-  if(amount >= 2) {
+  if(amount >= DELEGATE_AMOUNT_1) {
     userTaskCompleted = getTaskCompleted(event.block.timestamp, userTaskCompleted);
   }
 
