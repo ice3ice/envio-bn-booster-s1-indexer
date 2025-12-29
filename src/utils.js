@@ -1,9 +1,9 @@
 const taskTimestamps = {
-  task1StartTime: 1766839200,
-  task1EndTime: 1766839500,
-  task2EndTime: 1766839800,
-  task3EndTime: 1766840100,
-  task4EndTime: 1766840400,
+  task1StartTime: 1767020280,
+  task1EndTime: 1767020580,
+  task2EndTime: 1767020880,
+  task3EndTime: 1767021180,
+  task4EndTime: 1767021480,
 }
 
 const getTaskCompleted = (timestamp, userTaskCompleted) => {
