@@ -12,7 +12,6 @@ contracts:
       - event: DelegateUnstaked(address indexed user, uint256 amount)
       - event: DelegateUnstakingInitiated(address indexed user, address indexed node, uint256 amount, uint256 cooldownAmount)
       - event: Delegated(address indexed user, address indexed node, uint256 amount, uint256 effectiveMultiplier, uint256 effectiveLockUpPeriod)
-      - event: DelegateLockupIncreased(address indexed user, address indexed node, uint256 lockupPeriod, uint256 amount, uint256 weightedStartTime, uint256 newEffectiveLockup, uint256 effectiveMultiplier)
 rollback_on_reorg: false
 networks:
   - id: 56 # BSC
