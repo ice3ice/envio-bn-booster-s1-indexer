@@ -84,6 +84,11 @@ NodeStakingVault.Delegated.handler(async ({ event, context }) => {
   const amount = Number(BigInt(event.params.amount) / BigInt(10**18));
   const effectiveLockUpPeriod = Number(event.params.effectiveLockUpPeriod);
 
+  console.log("amount", amount);
+  console.log("effectiveLockUpPeriod", effectiveLockUpPeriod);
+  console.log("DELEGATE_AMOUNT_1", DELEGATE_AMOUNT_1);
+  console.log("DELEGATE_AMOUNT_2", DELEGATE_AMOUNT_2);
+  console.log("DELEGATE_LOCKUP_PERIOD", DELEGATE_LOCKUP_PERIOD);
   if ((amount !== DELEGATE_AMOUNT_1 && amount !== DELEGATE_AMOUNT_2) || effectiveLockUpPeriod !== DELEGATE_LOCKUP_PERIOD) {
     return;
   }
