@@ -4,10 +4,10 @@
 const { NodeStakingVault } = require("../generated");
 const { getTaskCompleted } = require("./utils");
 
-const INCREASED_AMOUNT = 6;
-const DELEGATE_AMOUNT_1 = 2;
-const DELEGATE_AMOUNT_2 = 8;
-const DELEGATE_LOCKUP_PERIOD = 5 * 60;
+const INCREASED_AMOUNT = 1;
+const DELEGATE_AMOUNT_1 = 1;
+const DELEGATE_AMOUNT_2 = 2;
+const DELEGATE_LOCKUP_PERIOD = 7 * 60;
 
 NodeStakingVault.DelegateAmountIncreased.handler(async ({ event, context }) => {
   // console.log("event.transaction.hash", event.transaction);
@@ -40,15 +40,10 @@ NodeStakingVault.DelegateAmountIncreased.handler(async ({ event, context }) => {
       id: event.params.user,
       task1Completed: false,
       task2Completed: false,
-      task3Completed: false,
-      task4Completed: false,
-      task5Completed: false
     }
   }
 
-  if(newTotalAmount >= DELEGATE_AMOUNT_2) {
-    userTaskCompleted.task5Completed = true;
-  }
+  userTaskCompleted = getTaskCompleted(event.block.timestamp, newTotalAmount, userTaskCompleted);
 
   context.UserTaskCompleted.set(userTaskCompleted);
 });
@@ -113,59 +108,10 @@ NodeStakingVault.Delegated.handler(async ({ event, context }) => {
       id: event.params.user,
       task1Completed: false,
       task2Completed: false,
-      task3Completed: false,
-      task4Completed: false,
-      task5Completed: false
     }
   }
 
-  if(amount >= DELEGATE_AMOUNT_2) {
-    userTaskCompleted.task5Completed = true;
-  }
-
-  userTaskCompleted = getTaskCompleted(event.block.timestamp, userTaskCompleted);
-
-  context.UserTaskCompleted.set(userTaskCompleted);
-});
-
-NodeStakingVault.DelegateLockupIncreased.handler(async ({ event, context }) => {
-  const effectiveLockUpPeriod = Number(event.params.lockupPeriod);
-
-  if(effectiveLockUpPeriod !== DELEGATE_LOCKUP_PERIOD) {
-    return;
-  }
-
-  const amount = Number(BigInt(event.params.amount) / BigInt(10**18));
-
-  const userHistory = {
-    id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
-    user: event.params.user,
-    operation: "Delegate Lockup Increased",
-    amount: 0,
-    period: event.params.lockupPeriod,
-    blockTimestamp: event.block.timestamp,
-    transactionHash: event.transaction.hash
-  };
-
-  // console.log("UserHistory from DelegateLockupIncreaseds", userHistory);
-
-  context.UserHistory.set(userHistory);
-
-  let userTaskCompleted = await context.UserTaskCompleted.get(event.params.user);
-  if(!userTaskCompleted) {
-    userTaskCompleted = {
-      id: event.params.user,
-      task1Completed: false,
-      task2Completed: false,
-      task3Completed: false,
-      task4Completed: false,
-      task5Completed: false
-    }
-  }
-
-  if(amount >= DELEGATE_AMOUNT_1) {
-    userTaskCompleted = getTaskCompleted(event.block.timestamp, userTaskCompleted);
-  }
+  userTaskCompleted = getTaskCompleted(event.block.timestamp, amount, userTaskCompleted);
 
   context.UserTaskCompleted.set(userTaskCompleted);
 });
