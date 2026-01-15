@@ -1,8 +1,8 @@
 const taskTimestamps = {
-  task1StartTime: 1768467600,
-  task1EndTime: 1768468200,
-  task2StartTime: 1768468500,
-  task2EndTime: 1768469100
+  task1StartTime: 1768474800,
+  task1EndTime: 1768475400,
+  task2StartTime: 1768475700,
+  task2EndTime: 1768476300
 }
 
 const DELEGATE_AMOUNT_1 = 1;
