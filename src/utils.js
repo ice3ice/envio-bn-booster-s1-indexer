@@ -1,12 +1,12 @@
 const taskTimestamps = {
-  task1StartTime: 1776654300,
-  task1EndTime: 1776657900,
-  task2StartTime: 1776658500,
-  task2EndTime: 1776662100
+  task1StartTime: 1776754200,
+  task1EndTime: 1776754500,
+  task2StartTime: 1776754620,
+  task2EndTime: 1776754920
 }
 
-const DELEGATE_AMOUNT_1 = 1;
-const DELEGATE_AMOUNT_2 = 2;
+const DELEGATE_AMOUNT_1 = 2;
+const DELEGATE_AMOUNT_2 = 5;
 
 const getTaskCompleted = (timestamp, amount, userTaskCompleted) => {
   // Task 1
