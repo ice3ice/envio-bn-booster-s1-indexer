@@ -4,10 +4,10 @@
 const { NodeStakingVault } = require("../generated");
 const { getTaskCompleted } = require("./utils");
 
-const INCREASED_AMOUNT = 3;
-const DELEGATE_AMOUNT_1 = 2;
-const DELEGATE_AMOUNT_2 = 5;
-const DELEGATE_LOCKUP_PERIOD = 5 * 60;
+const INCREASED_AMOUNT = 230;
+const DELEGATE_AMOUNT_1 = 220;
+const DELEGATE_AMOUNT_2 = 450;
+const DELEGATE_LOCKUP_PERIOD = 7 * 24 * 60 * 60;
 
 NodeStakingVault.DelegateAmountIncreased.handler(async ({ event, context }) => {
   // console.log("event.transaction.hash", event.transaction);
