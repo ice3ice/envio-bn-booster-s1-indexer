@@ -12,7 +12,7 @@ contracts:
       - event: DelegateUnstaked(address indexed user, uint256 amount)
       - event: DelegateUnstakingInitiated(address indexed user, address indexed node, uint256 amount, uint256 cooldownAmount)
       - event: Delegated(address indexed user, address indexed node, uint256 amount, uint256 effectiveMultiplier, uint256 effectiveLockUpPeriod)
-rollback_on_reorg: false
+rollback_on_reorg: true
 networks:
   - id: 56 # BSC
     start_block: 75240449
