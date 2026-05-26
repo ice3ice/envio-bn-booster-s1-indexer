@@ -22,6 +22,11 @@ const getTaskCompleted = (timestamp, amount, userTaskCompleted) => {
   return userTaskCompleted;
 }
 
+const forcePush =() => {
+  return 1;
+}
+
 module.exports = {
   getTaskCompleted,
+  forcePush,
 };
