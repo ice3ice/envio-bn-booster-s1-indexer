@@ -5,12 +5,16 @@
     "codegen": "envio codegen",
     "dev": "envio dev",
     "test": "pnpm mocha",
-    "start": "node generated/src/Index.bs.js"
+    "start": "envio start"
   },
   "devDependencies": {
     "mocha": "10.2.0"
   },
   "dependencies": {
-    "envio": "^2.32.3"
+    "envio": "3.2.1"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=22.0.0"
   }
 }
