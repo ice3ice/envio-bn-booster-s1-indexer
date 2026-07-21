@@ -8,7 +8,7 @@ const taskTimestamps = {
 const DELEGATE_AMOUNT_1 = 220;
 const DELEGATE_AMOUNT_2 = 450;
 
-const getTaskCompleted = (timestamp, amount, userTaskCompleted) => {
+export const getTaskCompleted = (timestamp, amount, userTaskCompleted) => {
   // Task 1
   if(timestamp >= taskTimestamps.task1StartTime && timestamp <= taskTimestamps.task1EndTime && amount >= DELEGATE_AMOUNT_1) {
     userTaskCompleted.task1Completed = true;
@@ -22,11 +22,6 @@ const getTaskCompleted = (timestamp, amount, userTaskCompleted) => {
   return userTaskCompleted;
 }
 
-const forcePush =() => {
+export const forcePush = () => {
   return 1;
-}
-
-module.exports = {
-  getTaskCompleted,
-  forcePush,
 };
